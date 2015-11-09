@@ -5,11 +5,12 @@ class Board(object):
     self.matrix = np.array(initial_matrix)
     self.rules = rules
 
-  def next_board(self):
-    next_board = np.zeros_like(self.matrix)
+  def populate_board(self, next_board):
     it = np.nditer(self.matrix, flags=['multi_index'])
     while not it.finished:
-      new_val = self.rules.apply(it.multi_index, self.matrix)
-      next_board[it.multi_index] = new_val
+      next_board[it.multi_index] = self.rules.apply(it.multi_index, self.matrix)
       it.iternext()
     return next_board.tolist()
+
+  def next_board(self):
+    return self.populate_board(np.zeros_like(self.matrix))
