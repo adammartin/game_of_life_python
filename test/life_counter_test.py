@@ -8,7 +8,7 @@ class LifeCounterTest(unittest.TestCase):
   def setUp(self):
     scale = (3,3)
     self.board = np.zeros(scale)
-    self.full_board = np.full(scale, 1)
+    self.full_board = np.full(scale, 1.0)
     self.life_counter = LifeCounter();
 
   def test_can_detect_no_living_neighbors(self):
