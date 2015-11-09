@@ -7,7 +7,9 @@ setup(
   packages=find_packages(exclude=['test', 'test.*']),
   namespace_packages=['game'],
   version='0.0.1.dev',
-  install_requires=[],
+  install_requires=[
+    'numpy'
+  ],
   entry_points={
 ## example from Hisc DataCollector
 #    'console_scripts': [
