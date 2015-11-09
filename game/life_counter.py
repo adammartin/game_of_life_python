@@ -13,10 +13,10 @@ class LifeCounter(object):
 
   def upper_bound(self, lower_bound, base, absolute_max):
     max_pos = self.max_pos(base, lower_bound)
-    return lower_bound + max_pos if lower_bound + max_pos <= absolute_max else absolute_max
+    return min(lower_bound+max_pos, absolute_max)
 
   def lower_bound(self, base):
-    return base - 1 if base -1 >= 0 else 0
+    return max(base-1, 0)
 
   def max_pos(self, base, lower_bound):
     return base - lower_bound + 2
