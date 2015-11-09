@@ -6,7 +6,9 @@ from game.life_counter import LifeCounter
 
 class LifeCounterTest(unittest.TestCase):
   def setUp(self):
-    self.board = np.zeros((3,3))
+    scale = (3,3)
+    self.board = np.zeros(scale)
+    self.full_board = np.full(scale, 1)
     self.life_counter = LifeCounter();
 
   def test_can_detect_no_living_neighbors(self):
@@ -26,5 +28,22 @@ class LifeCounterTest(unittest.TestCase):
     nt.assert_equal(self.life_counter.count((0,0), self.board), 0)
 
   def test_can_detect_when_all_life_is_alive_around_central_point(self):
-    board = np.full((3,3), 1.0)
-    nt.assert_equal(self.life_counter.count((1,1), board), 8)
+    nt.assert_equal(self.life_counter.count((1,1), self.full_board), 8)
+
+  def test_can_detect_all_life_around_upper_left_corner(self):
+    nt.assert_equal(self.life_counter.count((0,0), self.full_board), 3)
+
+  def test_can_detect_all_life_around_upper_right_corner(self):
+    nt.assert_equal(self.life_counter.count((2,0), self.full_board), 3)
+
+  def test_can_detect_all_life_around_lower_right_corner(self):
+    nt.assert_equal(self.life_counter.count((2,2), self.full_board), 3)
+
+  def test_can_detect_all_life_around_lower_left_corner(self):
+    nt.assert_equal(self.life_counter.count((0,2), self.full_board), 3)
+
+  def test_can_detect_all_life_around_middle_upper_edge(self):
+    nt.assert_equal(self.life_counter.count((1,0), self.full_board), 5)
+
+  def test_can_detect_all_life_around_middle_lower_edge(self):
+    nt.assert_equal(self.life_counter.count((1,2), self.full_board), 5)
