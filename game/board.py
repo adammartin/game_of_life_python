@@ -7,9 +7,8 @@ class Board(object):
 
   def populate_board(self, next_board):
     it = np.nditer(self.matrix, flags=['multi_index'])
-    while not it.finished:
+    for x in it:
       next_board[it.multi_index] = self.rules.apply(it.multi_index, self.matrix)
-      it.iternext()
     return next_board.tolist()
 
   def next_board(self):
