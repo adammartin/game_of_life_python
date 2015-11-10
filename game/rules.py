@@ -3,11 +3,11 @@ from game.life_counter import LifeCounter
 
 class Rules(object):
   def __init__(self, life_counter):
-    self.life_counter = life_counter
+    self.__life_counter = life_counter
 
   def apply(self, index, matrix):
     alive = matrix[index]
-    living_neighbors = self.life_counter.count(index, matrix)
+    living_neighbors = self.__life_counter.count(index, matrix)
     return self.__living_cell_check(living_neighbors) if alive else self.__dead_cell_check(living_neighbors)
 
   def __living_cell_check(self, living_neighbors):
