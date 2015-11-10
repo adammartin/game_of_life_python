@@ -8,12 +8,6 @@ class Rules(object):
   def apply(self, index, matrix):
     alive = matrix[index]
     living_neighbors = self.__life_counter.count(index, matrix)
-    return self.__living_cell_check(living_neighbors) if alive else self.__dead_cell_check(living_neighbors)
-
-  def __living_cell_check(self, living_neighbors):
-    if 2 <= living_neighbors <= 3:
+    if (living_neighbors==2 and alive) or (living_neighbors == 3):
       return 1
     return 0
-
-  def __dead_cell_check(self, living_neighbors):
-    return 1 if living_neighbors == 3 else 0
