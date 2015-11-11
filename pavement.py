@@ -8,7 +8,9 @@ setup(
   namespace_packages=['game'],
   version='0.0.1.dev',
   install_requires=[
-    'numpy'
+      'numpy',
+      'flask',
+      'flask-runner'
   ],
   entry_points={
 ## example from Hisc DataCollector
@@ -16,6 +18,11 @@ setup(
 #      'collectdata = hisc.external.clearcare.datacollection.collectdata:run',
 #    ],
   })
+
+
+@task
+def autopep8():
+    sh("autopep8 --in-place --recursive .")
 
 
 @task

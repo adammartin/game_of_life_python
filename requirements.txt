@@ -7,6 +7,9 @@ parse-type==0.3.4
 six==1.10.0
 wheel==0.24.0
 pep8==1.6.2
-paver
-flake8
-pep8-naming
+Flask==0.10.1
+Flask-Runner==2.1.1
+Flask-RESTful==0.3.4
+Paver==1.2.4
+flake8==2.5.0
+pep8-naming==0.3.3
