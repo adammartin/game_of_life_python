@@ -1,11 +1,12 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from flask_restful import Resource, Api
 from board import Board
 from life_counter import LifeCounter
 from rules import Rules
+import sys
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 api = Api(app)
 
 
@@ -17,7 +18,14 @@ class Game(Resource):
         return board.next_board()
 
 
+class StaticContent(Resource):
+    def get(self, path):
+        print(path, file=sys.stderr)
+        return send_from_directory('static', path)
+
+
 api.add_resource(Game, '/game')
+api.add_resource(StaticContent, '/static/')
 
 if __name__ == '__main__':
     app.run(debug=True)
