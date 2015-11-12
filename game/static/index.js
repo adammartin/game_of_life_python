@@ -1,9 +1,7 @@
 var stopped = false;
-var size = "15x15"
+var size = "30x30"
 var lifecell = jsboard.piece({text:"1", fontSize: "14px", textIndent:"-9999px", background: "black"});
 var b = jsboard.board({ attach: "game", size: size });
-
-var default_grid = [[0,1,0],[1,1,1],[0,0,0]];
 
 b.style({borderSpacing: "1px", margin: "0 auto", marginTop: "6px",});
 b.cell("each").style({width: "17px", height: "17px", background: "lightblue"});
@@ -44,20 +42,34 @@ function updateGrid(next_grid) {
     };
 };
 
+function rawCellValues(grid) {
+    return arrayToJson(grid).replace(/\D/g,'');
+};
+
 function nextGrid(current_grid) {
     $.post("/game", arrayToJson(current_grid), function(data) {
-	updateGrid(data)
+	updateGrid(data);
+	if(rawCellValues(current_grid) != rawCellValues(data) && !stopped) {
+            setTimeout(function() { nextGrid(convertNullsToZero(b.matrix())) }, 150);
+	} else {
+	    stopped = true;
+	}
     });
 };
 
 function startSim() {
-    var current_grid = b.matrix();
-    nextGrid(convertNullsToZero(current_grid));
+    nextGrid(convertNullsToZero(b.matrix()));
 };
 
 function stopSim() {
     stopped = true;
 };
 
+function resetSim() {
+    stopped = true;
+    b.cell("each").rid();
+}
+
 document.getElementById("start").addEventListener("click", function() { stopped = false; startSim(); });
 document.getElementById("stop").addEventListener("click", function() { stopSim(); });
+document.getElementById("reset").addEventListener("click", function() { resetSim(); });
